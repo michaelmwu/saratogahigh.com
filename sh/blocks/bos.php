@@ -1,0 +1,1 @@
+<p style="margin: 0px"><b>Need your activation code?</b> You can drop by the school office and get it from Mrs. Fong at the Guidance Counter. If you already registered but forgot your password, you can also use your activation code to <a href="login.php">reset your password</a>.</p>

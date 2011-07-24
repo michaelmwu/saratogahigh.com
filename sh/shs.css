@@ -1,0 +1,255 @@
+@import url("shs-navbar.php");
+
+body
+{
+	font-family: Sans-Serif;
+	background-color: #fff;
+	color: #000;
+	font-size: small;
+	margin: 0;
+	padding: 4px
+}
+
+input
+{
+	font-family: Sans-Serif;
+	font-size: small;
+}
+
+dt { font-weight: bold; }
+form { margin: 0px }
+
+h1 { font-size: x-large; font-weight: bold; }
+h2 { font-size: large;   font-weight: bold; }
+h3 { font-size: large;   font-weight: normal; }
+h4 { font-size: medium;  font-weight: bold; }
+h5 { font-size: medium; }
+h6 { font-size: medium; }
+
+a:link { color: #039; }
+a:visited { color: #039; }
+
+table.header
+{
+	width: 100%;
+	font-size: small;
+	background-color: #000080;
+	color: #fff;
+}
+
+table.datatable thead tr th
+{
+	font-weight: bold;
+	background-color: #ddd;
+	border: solid 1px #c0c0c0;
+	margin: 1px;
+	padding: 2px;
+}
+
+table.datatable tr td
+{
+	background-color: #f8f8f8;
+	border: solid 1px #ddd;
+	margin: 1px;
+	padding: 2px;
+}
+
+table.datatable tr td.datablank
+{
+	background-color: #fff;
+	border: solid 1px #fff;
+}
+
+td.header
+{
+	font-weight: bold;
+	background-color: #e8e8e8;
+	border: solid 1px #c0c0c0;
+}
+
+td.data
+{
+	background-color: #f8f8f8;
+	border: solid 1px #e8e8e8;
+}
+
+td.datablank
+{
+	background-color: #fff;
+	border: solid 1px #fff;
+}
+
+div.header
+{
+	padding: 2px;
+	background-color: #e8e8e8;
+	border: solid 1px #c0c0c0;
+}
+
+div.data
+{
+	margin-bottom: 20px;
+	padding: 2px;
+}
+
+img.imgicon
+{
+	margin-right: 2px;
+	vertical-align: middle;
+}
+
+p.periodlabel
+{
+	margin: 0px;
+	border-bottom: 1px solid #999999;
+	text-align: right;
+	font-size: large;
+	font-weight: bold;
+	font-style: italic;
+	color: #999999;
+}
+
+p.classlabel
+{
+	margin: 0 0 0.5ex 0;
+	border-top: 1px solid #999999;
+	text-align: right;
+	font-size: small;
+	background-color: #dddddd;
+	padding: 2px; 
+}
+
+ul.flat
+{
+	padding-left: 0px;
+	margin: 0 0 0 18px;
+	list-style-position: outside;
+	list-style-type: none;
+}
+
+span.toolbar
+{
+	border: 1px solid #888888;
+	background-color: #eeeeee;
+	padding: 3px;
+}
+
+span.tipbutton
+{
+	border: #888888 1px solid;
+	padding: 3px;
+	background-color: #ffffcc;
+}
+
+p.informational
+{
+	border: #999 2px dotted;
+	padding: 3px;
+	background-color: #ffc;
+	font-style: italic;
+}
+
+p.grey
+{
+	color: #999;
+}
+
+span.navbaricon
+{
+	padding: 0px;
+}
+
+div.navbar
+{
+	padding: 3px;
+	border-bottom: #c33 2px solid;
+}
+
+div.subnavbar
+{
+	padding: 3px;
+	border-bottom: #c33 2px solid;
+}
+
+.yellowbox
+{
+	background-color: #ffffcc;
+	padding: 3px;
+	border-top: #999 3px solid;
+	border-left: #999 1px solid;
+	border-right: #999 1px solid;
+	border-bottom: #999 1px solid;
+}
+
+/* Toolbars */
+ul.toolbar { margin: 0; padding: 0; list-style: none; }
+ul.toolbar li { float: left; padding: 3px; margin: 5px 1px; border: 1px outset #e0e0e0; background-color: #e0e0e0 }
+ul.toolbar li:hover { border: 1px inset #eee }
+ul.toolbar + div { clear: left }
+
+/* Directory */
+table.contactinfo { font-size: medium }
+table.contactinfo td.contacttype { color: #666; font-variant: small-caps }
+
+/* Comment boxes */
+#showCommentBox { padding: 6px; margin: 5px }
+#commentBox { display: none; width: 435px; background-color: #eee; margin: 12px 2px 2px 2px; border: 1px solid #666 }
+#commentBox form { padding: 3px }
+#commentBox textarea { width: 420px; font-size: small; border: 1px solid #999; padding: 2px }
+
+/* News */
+.newsDateline {  }
+.newsHeadline { margin: 0.3em 0 0 0; font-weight: bold; font-size: medium }
+.newsContent p { margin: 0.3em 0 0 0; text-align: justify }
+.newsContent p:first-line { text-transform: uppercase; font-weight: bold }
+
+/*
+#dnavbar li a { display: block; padding: 5px 6px 3px 30px; color: #c33; background-position: left top; background-repeat: no-repeat; }
+#dnavbar #newmail a   { background-image: url("/imgs/nav/navmailred-left.gif"); }
+#dnavbar #mail a      { background-image: url("/imgs/nav/navmail-left.gif"); }
+#dnavbar #directory a { background-image: url("/imgs/nav/navdirectory-left.gif"); }
+#dnavbar #calendar a  { background-image: url("/imgs/nav/navcalendar-left.gif"); }
+#dnavbar #cm a        { background-image: url("/imgs/nav/navclass-left.gif"); }
+#dnavbar #tools a     { background-image: url("/imgs/nav/navtools-left.gif"); }
+#dnavbar #help a      { background-image: url("/imgs/nav/navhelp-left.gif"); }
+#dnavbar #admin a     { background-image: url("/imgs/nav/navadmin-left.gif"); }
+#dnavbar #logout a    { background-image: url("/imgs/nav/navlogout-left.gif"); }
+#dnavbar #login a     { background-image: url("/imgs/nav/navlogin-left.gif"); }
+*/
+
+/* index.php */
+
+div.pagecolumn { float: left; margin: 0px 5px 5px 0px;}
+dd { margin-left: 25px }
+		
+h2.red, h2.blue, h2.gray { font-size: 18px; background: url('/imgs/bubble2.gif') no-repeat bottom left; padding-left: 30px; margin-bottom: 0px; }
+
+h2.red     { color: #c33; border-bottom: 3px #c33 solid; }
+h2.red  a  { color: #c33; }
+h2.blue    { color: #039; border-bottom: 3px #039 solid; }
+h2.blue a  { color: #039; }
+h2.gray    { color: #888; border-bottom: 3px #888 solid; }
+h2.gray a  { color: #888; }
+div.footer { text-align: right; padding: 3px }
+.mainbulletinbox p { margin: 0px; text-align: center; font-size: medium }
+tr.announcebox td p   { margin: 2px; text-align: justify }
+tr.announcebox td div { font-weight: bold; text-align: center; font-size: large; }
+tr.announcebox td     { border: 1px dotted #666666; vertical-align: top }
+		
+.hidden { border: 0px; opacity: 0; width: 0px; height: 0px;}
+.xbox { float: right; position: relative; bottom: 22px; padding-left: auto; text-align: right; }
+.xbox a { text-decoration: none; }
+.xbox img { border: 0px; }
+
+.block_tabs span { background-color: #F0F0F0; color: #A0A0A0; font-weight: bold; font-size: 12px; padding: 4px; position: relative; top: -4px; }
+.block_tabs { margin-top: 7px; }
+
+.rsslink { margin: 0px; padding: 3px 0px 10px 0px; }
+.content { /* Nothing here, just placer for a content box */}
+
+/* new-user.php */
+
+td.lefttd {width: 200px; font-weight: bold}
+div.fieldinfo { padding: 1px; margin-left: 3em }
+p.errormessage { font-size: medium; width: 500px; color: #800000; background-color: #ffffcc; padding: 2px; border: 1px solid #999999 }
+div.error { font-size: medium; width: 500px; color: #800000; background-color: #ffffcc; padding: 2px; border: 1px solid #999999 }

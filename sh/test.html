@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<title>SaratogaHigh.com</title>
+	<link rel="stylesheet" type="text/css" href="shs.css">
+	<style type="text/css"><!--
+		div.pagecolumn { float: left; margin: 0px 5px 5px 0px }
+		dd { margin-left: 25px }
+		h2 { background: url('/imgs/bubble2.gif') no-repeat bottom left; padding-left: 30px; margin-bottom: 0px; }
+		h2.red     { color: #c33; border-bottom: 3px #c33 solid; }
+		h2.red  a  { color: #c33; }
+		h2.blue    { color: #039; border-bottom: 3px #039 solid; }
+		h2 blue a  { color: #039; }
+		h2.gray    { color: #888; border-bottom: 3px #888 solid; }
+		h2.gray a  { color: #888; }
+		div.headed { background-color: #f0f0f0; border-width: 0 1px 1px 1px; border-style: solid; border-color: #666; padding: 3px; word-wrap: break-word; }
+		div.footer { text-align: right; padding: 3px }
+		.mainbulletinbox p { margin: 0px; text-align: center; font-size: medium }
+		tr.announcebox td p   { margin: 2px; text-align: justify }
+		tr.announcebox td div { font-weight: bold; text-align: center; font-size: large; }
+		tr.announcebox td     { border: 1px dotted #666666; vertical-align: top }
+		#commentBox { margin-left: 0px; margin-right: auto }
+		#showCommentBox { text-align: left }
+		
+		.hidden {border: 0px; opacity: 0; width: 0px; height: 0px;}
+		.xbox { float: right; }
+		.xbox a { text-decoration: none; }
+	--></style>
+	<script type="text/javascript" src="/move_boxes.js.php"></script>
+</head>
+<body onload="calculate_boxes();">
+
+<script type="text/javascript">
+<!--
+	var xmlhttp=false;
+	/*@cc_on @*/
+	/*@if (@_jscript_version >= 5)
+	// JScript gives us Conditional compilation, we can cope with old IE versions.
+	// and security blocked creation of the objects.
+	 try {
+	  xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	 } catch (e) {
+	  try {
+	   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	  } catch (E) {
+	   xmlhttp = false;
+	  }
+	 }
+	@end @*/
+	if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+		xmlhttp = new XMLHttpRequest();
+	}
+//-->
+</script>
+
+<div id="bigbox1" style="width: 210px" class="pagecolumn bigbox">
+<div id="asb_block" name="1" class="movebox"><h2 class="blue" onMouseOver="startMoveCursor(event);" onMouseDown="startDrag(event);"><a href="news/?id=1">ASB News</a></h2>
+HI</div>
+<div id="fakebox1" class="movebox hidden"></div>
+</div>
+
+<div id="bigbox2" style="width: 415px" class="pagecolumn bigbox">
+<div id="fakebox2" class="movebox hidden"></div>
+</div>
+
+<div id="bigbox3" style="width: 210px" class="pagecolumn bigbox">
+<div id="fakebox3" class="movebox hidden"></div>
+</div>
+
+<div style="clear: left"><a href="/personalize.php">Personalize</a></div>
+
+<hr>
+
+<table>
+<tr><td style="text-align: right; font-weight: bold">Account</td><td><a href="edit-user.php">Edit Account Info</a>, <a href="edit-pw.php">Change Password</a></td></tr>
+<tr><td style="text-align: right; font-weight: bold">About</td><td><a href="stats.php">Site Statistics</a>, <a href="staff.php">Our Staff</a>, <a href="privacy.php">Privacy Policy</a>, <a href="/help/?page=students">FAQ</a></td></tr>
+</table>
+
+<script type="text/javascript">
+<!--
+function showCommentBox()
+{
+	document.getElementById('showCommentBox').style.display = 'none';
+	document.getElementById('commentBox').style.display = 'block';
+}
+
+function hideCommentBox()
+{
+	document.getElementById('showCommentBox').style.display = 'block';
+	document.getElementById('commentBox').style.display = 'none';
+}
+
+function comment()
+{
+	url = "/comment-confirm.php";
+
+	xmlhttp.open('POST', url,true);
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4)
+		{
+			document.getElementById("commentStatus").innerHTML = xmlhttp.responseText;
+		}
+	}
+	xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlhttp.send('XMLRequest=1&page=/test.php&go=comment&entrytext=' + document.commentForm.entrytext.value);
+	hideCommentBox();
+	document.commentForm.entrytext.value = "";
+	return false;
+}
+//-->
+</script>
+
+<div id="commentStatus"></div>
+
+<div id="showCommentBox"><span class="toolbar" style="cursor: hand" onclick="showCommentBox();"><img style="vertical-align: middle" src="/imgs/arrow-down.gif" alt="(more)">&nbsp;Questions, or Comments?</span></div>
+
+<div id="commentBox">
+<div onclick="hideCommentBox();" style="cursor: hand; background-color: #888; color: #fff; font-weight: bold; padding: 3px">Questions or Comments?</div>
+<form name="commentForm" style="padding: 3px" method="POST" action="/comment-confirm.php" onSubmit="return comment();">
+<p style="margin: 0px">
+You can send comments or questions about this feature, page, or in general to SaratogaHigh.com staff. We'll follow up using the sh.com Mail system.<br><input type="hidden" name="go" value="comment">
+<input type="hidden" name="page" value="/test.php">
+<textarea name="entrytext" rows="5" cols="50"></textarea><br><input type="submit" name="btn" value="Send"> Or <a href="mailto:staff@saratogahigh.com">email</a> us.</p>
+</form>
+</div>
+<div id="infobox">
+</div>
+
+</body>
+</html>
