@@ -669,6 +669,79 @@ CREATE TABLE `EVENT_LIST` (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 # --------------------------------------------------------
+#
+# Table structure for table `FAQANSWER_LIST`
+#
+
+DROP TABLE IF EXISTS `FAQANSWER_LIST`;
+CREATE TABLE `FAQANSWER_LIST` (
+  `FAQANSWER_ID` int(10) unsigned NOT NULL auto_increment,
+  `FAQANSWER_QUESTION` tinyint(3) unsigned NOT NULL default '0',
+  `FAQANSWER_TEXT` text NOT NULL,
+  `FAQANSWER_TS` datetime NOT NULL default '0000-00-00 00:00:00',
+  `FAQANSWER_USER` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`FAQANSWER_ID`),
+  KEY `FAQANSWER_QUESTION` (`FAQANSWER_QUESTION`,`FAQANSWER_USER`),
+  FULLTEXT KEY `FAQANSWER_TEXT` (`FAQANSWER_TEXT`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+#
+# Table structure for table `FAQCAT_LIST`
+#
+
+DROP TABLE IF EXISTS `FAQCAT_LIST`;
+CREATE TABLE `FAQCAT_LIST` (
+  `FAQCAT_ID` int(10) unsigned NOT NULL auto_increment,
+  `FAQCAT_TITLE` varchar(50) NOT NULL default '',
+  `FAQCAT_DESC` text NOT NULL,
+  `FAQCAT_USER` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`FAQCAT_ID`),
+  KEY `FAQCAT_USER` (`FAQCAT_USER`)
+) TYPE=MyISAM AUTO_INCREMENT=17 ;
+
+#
+# Dumping data for table `FAQCAT_LIST`
+#
+
+INSERT INTO `FAQCAT_LIST` VALUES (1, 'Official School News', 'Anything affecting or relating to everyone at school.', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (2, 'ASB, Commissions', 'Whatever you want to know about the mysterious student leaders of Saratoga High.', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (3, 'Office, Guidance, Attendance', 'What you DON\'T know about everything office-related from tardies to transcripts.', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (4, 'College, College & Career Center', 'The one thing so many students are focused on: college', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (5, 'Academics', 'Find your general academic information here', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (6, 'Faculty', 'Anything and everything you may have wanted to know about members of the faculty', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (7, 'Senior class', 'Anything and everything you may have wanted to know about the senior class', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (8, 'Junior Class', 'Anything and everything you may have wanted to know about the juinor class', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (9, 'Sophomore Class', 'Anything and everything you may have wanted to know about the sophomore class', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (10, 'Freshman Class', 'Anything and everything you may have wanted to know about the freshman class', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (11, 'Fine arts', 'Whatever information can be gleaned about the likes of band, drama, sculpture...', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (12, 'Journalism', 'They publish stuff, but what else? Find out here', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (13, 'Clubs', 'Information regarding and relating to clubs on campus', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (14, 'Off Campus', 'Questions about off-campus facilities and/or events', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (15, 'Off-the-wall', 'The really zany stuff', 0);
+INSERT INTO `FAQCAT_LIST` VALUES (16, 'Miscellaneous', 'Bits and pieces of information that wouldn\'t really fit elsewhere', 0);
+
+
+#
+# Table structure for table `FAQQUESTION_LIST`
+#
+
+DROP TABLE IF EXISTS `FAQQUESTION_LIST`;
+CREATE TABLE `FAQQUESTION_LIST` (
+  `FAQQUESTION_ID` int(10) unsigned NOT NULL auto_increment,
+  `FAQQUESTION_TEXT` text NOT NULL,
+  `FAQQUESTION_CAT` int(10) unsigned NOT NULL default '0',
+  `FAQQUESTION_TS` datetime NOT NULL default '0000-00-00 00:00:00',
+  `FAQQUESTION_REPLY` tinyint(3) unsigned NOT NULL default '0',
+  `FAQQUESTION_USER` int(10) unsigned default NULL,
+  `FAQQUESTION_NAME` varchar(25) default NULL,
+  `FAQQUESTION_EMAIL` varchar(50) default NULL,
+  PRIMARY KEY  (`FAQQUESTION_ID`),
+  FULLTEXT KEY `FAQQUESTION_TEXT` (`FAQQUESTION_TEXT`),
+  KEY `FAQQUESTION_USER` (`FAQQUESTION_NAME`),
+  KEY `FAQQUESTION_CAT` (`FAQQUESTION_CAT`)
+) TYPE=MyISAM AUTO_INCREMENT=19 ;
+
+# --------------------------------------------------------
 
 #
 # Table structure for table `FILETYPE_LIST`
@@ -1103,3 +1176,78 @@ CREATE TABLE `LOG_LIST` (
   KEY `UserTime` (`LOG_USER`,`LOG_TS`),
   KEY `YrMo` (`LOG_YR`,`LOG_MO`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `PARENTSTUDENT_LIST`
+#
+
+CREATE TABLE `PARENTSTUDENT_LIST` (
+  `PARENTSTUDENT_ID` int(10) unsigned NOT NULL auto_increment,
+  `PARENTSTUDENT_PARENT` int(10) unsigned NOT NULL default '0',
+  `PARENTSTUDENT_STUDENT` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`PARENTSTUDENT_ID`),
+  KEY `PARENTSTUDENT_PARENT` (`PARENTSTUDENT_PARENT`,`PARENTSTUDENT_STUDENT`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+#
+# Dumping data for table `PARENTSTUDENT_LIST`
+#
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `USER_LIST`
+#
+
+DROP TABLE IF EXISTS `USER_LIST`;
+CREATE TABLE `USER_LIST` (
+  `USER_ID` int(10) unsigned NOT NULL auto_increment,
+  `USER_FN` varchar(16) NOT NULL default '',
+  `USER_LN` varchar(16) NOT NULL default '',
+  `USER_FULLNAME` varchar(33) NOT NULL default '',
+  `USER_FN_SOUNDEX` varchar(4) NOT NULL default '',
+  `USER_LN_SOUNDEX` varchar(4) NOT NULL default '',
+  `USER_FULLNAME_SOUNDEX` varchar(4) NOT NULL default '',
+  `USER_DUPNAME` tinyint(3) unsigned NOT NULL default '0',
+  `USER_SID` mediumint(6) unsigned default NULL,
+  `USER_PW` varchar(32) NOT NULL default '',
+  `USER_GR` smallint(5) unsigned NOT NULL default '1',
+  `USER_USERTYPE` tinyint(3) unsigned default NULL,
+  `USER_COMMENTEMAIL` tinyint(4) NOT NULL default '0',
+  `USER_STATUS` tinyint(3) unsigned NOT NULL default '0',
+  `USER_EMAIL` varchar(48) NOT NULL default '',
+  `USER_UNAME` varchar(32) default NULL,
+  `USER_VALIDATED` tinyint(4) NOT NULL default '0',
+  `USER_LASTLOGIN` datetime default NULL,
+  `USER_ADDRESS` varchar(50) NOT NULL default '',
+  `USER_CITY` varchar(25) NOT NULL default '',
+  `USER_STATE` char(2) NOT NULL default '',
+  `USER_ZIP` varchar(5) NOT NULL default '',
+  `USER_AIM` varchar(24) default NULL,
+  `USER_VERSTR` varchar(40) NOT NULL default '',
+  `USER_TEACHERTAG` int(10) unsigned default NULL,
+  `USER_ACTIVATION` varchar(16) default NULL,
+  `USER_SUPERPARENT` tinyint(3) unsigned NOT NULL default '0',
+  `USER_MAILCAP` int(10) unsigned default '100',
+  `USER_CLASSIFIEDS_BANNED` datetime default NULL,
+  `USER_FRONTPAGE` longtext NOT NULL,
+  PRIMARY KEY  (`USER_ID`),
+  UNIQUE KEY `USER_SID` (`USER_SID`),
+  UNIQUE KEY `USER_TAG` (`USER_TEACHERTAG`),
+  UNIQUE KEY `USER_UNAME` (`USER_UNAME`),
+  KEY `USER_FN` (`USER_FN`),
+  KEY `USER_LN` (`USER_LN`),
+  KEY `USER_FULLNAME` (`USER_FULLNAME`),
+  KEY `USER_FN_SOUNDEX` (`USER_FN_SOUNDEX`),
+  KEY `USER_LN_SOUNDEX` (`USER_LN_SOUNDEX`),
+  KEY `USER_FULLNAME_SOUNDEX` (`USER_FULLNAME_SOUNDEX`),
+  KEY `Validated` (`USER_GR`,`USER_VALIDATED`),
+  KEY `USER_PW` (`USER_PW`),
+  KEY `USER_LASTLOGIN` (`USER_LASTLOGIN`),
+  KEY `USER_STATUS` (`USER_STATUS`),
+  KEY `GrLastlogin` (`USER_GR`,`USER_LASTLOGIN`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+
