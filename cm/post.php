@@ -10,7 +10,7 @@ if(!$canedit)
 
 if(true)
 {
-	if($filterclass && $filterteacher)
+	if($filterclass || $filterclasscat)
 	{
 		if($_POST['action'] == 'newfile' || $_POST['action'] == 'newmemo')
 		{
@@ -84,7 +84,7 @@ if(true)
 		}
 		
 		if($success)
-			header('location: http://' . DNAME . '/cm/cmview.php?class=' . $classid . '&teacher=' . $teacherid);
+			header('location: http://' . DNAME . '/cm/cmview.php?' . $getstring;
 	}
 }
 
@@ -93,7 +93,7 @@ if(true)
 <html>
 <head>
 	<title><?
-	if($filterclass && $filterteacher)
+	if($filterclass || $filterclasscat)
 	{
 		print 'Course Materials: ';
 		print $c['CLASS_NAME'];
@@ -115,17 +115,22 @@ if(true)
 <? include "inc-header.php" ?>
 
 <?
-if($filterclass && $filterteacher)
+if( $filterclass || $filterclasscat)
 {
 	// Print title
 	print '<div>';
 	print '<div style="padding: 3px; margin: 0 3px 0 0; float: left; font-size: large; background-color: #c33; color: #fff">Course Materials</div>';
 	print '<h1 style="padding: 3px; background-color: #eee; font-size: large; margin: 0; font-weight: normal">';
-	print '<a href="./?class=' . $classid . '&amp;teacher=' . $teacherid . '">';
-	print '<span style="font-weight: bold">' . $c['CLASS_NAME'] . '</span>';
-	print ' ';
-	print $t['TEACHER_NAME'];
-	print '</a>: <a href="cmview.php?class=' . $classid . '&amp;teacher=' . $teacherid . '">Course Materials</a>';
+	print '<a href="./?' . $getstring . '">';
+	if($filterclass)
+	{
+		print '<span style="font-weight: bold">' . $c['CLASS_NAME'] . '</span>';
+		if($filterteacher)
+			print ' ' . $t['TEACHER_NAME'];
+	}
+	else if($filterclasscat)
+		print $cc['CLASSCAT_NAME'];
+	print '</a>: <a href="cmview.php?' . $getstring . '">Course Materials</a>';
 	print '</h1>';
 	print '</div>';
 	
@@ -134,7 +139,7 @@ if($filterclass && $filterteacher)
 	if($_POST['itemtype'] == 'file')
 	{
 		print '<h2>Upload File</h2>';
-		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?class=' . $classid . '&amp;teacher=' . $teacherid . '" method="POST">';
+		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?' . $getstring . '" method="POST">';
 		print '<table>';
 		print '<tr><td style="font-weight: bold">Title</td><td><input style="width: 20em" type="text" name="title"></td><td style="color: #999">e.g. "Worksheet #4"</td></tr>';
 		print '<tr><td style="font-weight: bold">Description</td><td><input style="width: 20em" type="text" name="desc"></td><td style="color: #999">e.g. "Extra practice for final"</td></tr>';
@@ -159,7 +164,7 @@ if($filterclass && $filterteacher)
 	if($_POST['itemtype'] == 'memo')
 	{
 		print '<h2>New Memo</h2>';
-		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?class=' . $classid . '&amp;teacher=' . $teacherid . '" method="POST">';
+		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?' . $getstring . '" method="POST">';
 		print '<table>';
 		print '<tr><td style="font-weight: bold">Title</td><td><input style="width: 20em" type="text" name="title"></td><td style="color: #999">e.g. "A note to students"</td></tr>';
 		print '<tr><td style="font-weight: bold">Description</td><td><input style="width: 20em" type="text" name="desc"></td><td style="color: #999">e.g. "Info pertaining to this class"</td></tr>';
@@ -174,7 +179,7 @@ if($filterclass && $filterteacher)
 	if($_POST['itemtype'] == 'link')
 	{
 		print '<h2>New Web Link</h2>';
-		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?class=' . $classid . '&amp;teacher=' . $teacherid . '" method="POST">';
+		print '<form style="margin: 0" enctype="multipart/form-data" action="post.php?' . $getstring . '" method="POST">';
 		print '<table>';
 		print '<tr><td style="font-weight: bold">Title</td><td><input style="width: 20em" type="text" name="title"></td><td style="color: #999">e.g. "Google"</td></tr>';
 		print '<tr><td style="font-weight: bold">Description</td><td><input style="width: 20em" type="text" name="desc"></td><td style="color: #999">e.g. "A popular all-purpose search engine."</td></tr>';

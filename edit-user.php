@@ -44,6 +44,9 @@ $done = false;
 if($_POST["btn"] == "Save")
 {
 	$aun = stripslashes($_POST['un']);
+	$aaddr = stripslashes($_POST['addr']);
+	$acity = stripslashes($_POST['city']);
+	$azip = stripslashes($_POST['zip']);
 	$axfn = stripslashes($_POST['xfn']);
 	$axln = stripslashes($_POST['xln']);
 	$agr = stripslashes($_POST['gr']);
@@ -64,23 +67,32 @@ if($_POST["btn"] == "Save")
 		{
 			if(!is_numeric($asid))
 				$asid = 'Null';
+			if(strlen($aun) < 1)
+				$aun = 'Null';
+			else
+				$aun = "'" . addslashes($aun) . "'";
 			if(!is_numeric($atag))
 				$atag = 'Null';
 			if(!is_numeric($amailcap))
 				$amailcap = 'Null';
 			
-			$unameconflicts = mysql_query('SELECT COUNT(*) FROM USER_LIST WHERE USER_ID!=' . $sid . ' AND USER_UNAME="' . addslashes($aun) . '"');
+			$unameconflicts = mysql_query('SELECT COUNT(*) FROM USER_LIST WHERE USER_ID!=' . $sid . ' AND USER_UNAME=' . $aun);
 			$numconflicts = mysql_fetch_array($unameconflicts, MYSQL_ASSOC);
 			
 			if($numconflicts['COUNT(*)'] > 0 && strlen($aun) > 0)
+			{
 				print '<p>That username was already taken.</p>';
+			}
 			else
 			{		
 				mysql_query("UPDATE USER_LIST SET USER_SID=" . $asid . ",
 					USER_EMAIL='" . addslashes($aemail) . "',
 					USER_TEACHERTAG=" . $atag . ",
-					USER_UNAME='" . addslashes($aun) . "',
+					USER_UNAME=" . $aun . ",
 					USER_GR=" . $agr . ",
+					USER_ADDRESS='" . $aaddr . "',
+					USER_CITY='" . $acity . "',
+					USER_ZIP='" . $azip . "',
 					USER_MAILCAP=" . $amailcap . ",
 					USER_FN=CONCAT(UPPER(LEFT('" . $_POST["xfn"] . "',1)),SUBSTRING('" . $_POST["xfn"] . "' FROM 2)),
 					USER_LN=CONCAT(UPPER(LEFT('" . $_POST["xln"] . "',1)),SUBSTRING('" . $_POST["xln"] . "' FROM 2)),
@@ -88,7 +100,7 @@ if($_POST["btn"] == "Save")
 					USER_FN_SOUNDEX=SOUNDEX(USER_FN),
 					USER_LN_SOUNDEX=SOUNDEX(USER_LN),
 					USER_FULLNAME_SOUNDEX=SOUNDEX(USER_FULLNAME)
-					WHERE USER_ID=$sid") or die("User update failed");
+					WHERE USER_ID=$sid") or die("User update failed" . mysql_error());
 					
 				$success = true;
 			}
@@ -110,6 +122,9 @@ else
 	$aun = $l["USER_UNAME"];
 	$axfn = $l["USER_FN"];
 	$axln = $l["USER_LN"];
+	$aaddr = $l["USER_ADDRESS"];
+	$acity = $l["USER_CITY"];
+	$azip = $l["USER_ZIP"];
 	$agr = $l["USER_GR"];
 	$atag = $l["USER_TEACHERTAG"];
 	$aac = $l["USER_ACTIVATION"];
@@ -133,6 +148,12 @@ if(!$done)
 	<tr>
 	<td>Last Name</td>
 	<td><input type="text" maxlength="16" size="20" name="xln" value="<?= htmlentities($axln) ?>"></td>
+	</tr>
+	<tr>
+	<td style="vertical-align: top;">Address</td>
+	<td><input type="text" maxlength="48" size="35" name="addr" value="<?= htmlentities($aaddr) ?>">
+	<br><input type="text" maxlength="16" size="16" name="city" value="<?= htmlentities($acity) ?>">, CA <input type="text" maxlength="5" size="8" name="zip" value="<?= htmlentities($azip) ?>">
+	</td>
 	</tr>
 	<tr>
 	<td>Email Address</td>
@@ -208,6 +229,12 @@ if(!$done)
 	<tr>
 	<td>Last Name</td>
 	<td><?= $axln ?></td>
+	</tr>
+	<tr>
+	<td style="vertical-align: top;">Address</td>
+	<td><?= htmlentities($aaddr) ?>
+	<br><?= htmlentities($acity) ?>, CA <?= htmlentities($azip) ?>
+	</td>
 	</tr>
 	<tr>
 	<td>Email Address</td>

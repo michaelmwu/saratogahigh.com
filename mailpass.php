@@ -4,7 +4,10 @@
 
 include 'db.php';
 
-$email = $_POST['email'];
+if($_POST['email'])
+	$email = $_POST['email'];
+elseif($_GET['email'])
+	$email = $_GET['email'];
 
 if (emailvalidation($email))
 {
@@ -16,9 +19,9 @@ else
 	$eresult = mysql_query("SELECT * FROM USER_LIST WHERE USER_UNAME='" . $email . "'") or die(mysql_error());
 	$errorm = "Sorry, we could not find that username in our database.";
 }
-if(strlen($email) < 1)
+if(strlen($email) == 0)
 {
-        $errorm = 'Please enter a username or email.';
+	$errorm = 'Please enter a username or email.';
 	$errorshow = true;
 }
 else
@@ -27,14 +30,17 @@ else
 	{
 		$newactivation = NewActivationCode();
 		mysql_query("UPDATE USER_LIST SET USER_ACTIVATION='$newactivation' WHERE USER_ID='" . $e['USER_ID'] . "'") or die("Could not update! " . mysql_error());
-		$newactivation = preg_replace("/ /", "%20", $newactivation);
-		email($e['USER_EMAIL'], "SaratogaHigh.com Reset Password Request", 
-		"Dear " . $e['USER_FULLNAME'] . ",\n\n"
-		. "We received a request to reset your SaratogaHigh.com password. Follow the link below to reset your password. <b>Do not click the link below if you do not wish to change your password.</b>\n\n"
-		. "http://" . DNAME . "/resetpw.php?un=" . preg_replace("/ /", "%20", $e['USER_UNAME']) . "&code=$newactivation\n\n"
+		$newactivation = urlencode($newactivation);
+		$config = array( 'from' => "staff",
+						'to' => $e['USER_EMAIL'],
+						'subject' => "SaratogaHigh.com Reset Password Request",
+						'message' => "Dear " . $e['USER_FULLNAME'] . ",\n\n"
+		. "We received a request to reset your SaratogaHigh.com password. Follow the link below to reset your password. Do NOT click the link below if you do not wish to change your password.\n\n"
+		. "http://" . DNAME . "/resetpw.php?un=" . urlencode($e['USER_UNAME']) . "&code=$newactivation\n\n"
 		. "This email was automatically generated in response to a request to reset a password. If you feel that this email has been sent in error, please notify the staff at SaratogaHigh.com\n\n"
 		. "Sincerely,\n"
-		. "The Staff of SaratogaHigh.com");
+		. "The Staff of SaratogaHigh.com" );
+		email($config);
 	}
 	else
 		$errorshow = true;

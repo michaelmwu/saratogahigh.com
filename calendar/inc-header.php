@@ -1,0 +1,3 @@
+<? include '../inc-headercommon.php'; ?>
+
+<div class="navbar"><span style="font-weight: bold">Calendar</span>: <a class="lnkh" href="calendar.php">My Calendar</a> | <a class="lnkl" href="layers.php">Group Colors</a> | <a class="lnkb" href="browselayers.php">Browse Groups</a> | <a class="lnkc" href="addlayer.php">Create Group</a> | <a class="lnka" href="addevent.php?<?= $qstr ?>">Add Event</a></div> <? // if(SITE_ACTIVE || $isadmin) {  | <a class="lnko" href="classlayers.php">Homework Calendars</a> } Homework Calendars disabled at request of administration ?>

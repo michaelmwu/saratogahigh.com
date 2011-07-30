@@ -18,17 +18,17 @@ if(is_numeric($_GET['id']) && $loggedin)
 			$isauthor = true;
 		}
 	}
-	if($isprog && isset($_POST['newauthor']))
+	if($isprog && isset($_POST['newauthor']) && is_numeric($authorid))
 	{
 		$authorid = $_POST['author'];
-		$query = mysql_query("SELECT * FROM QAAUTHOR_LIST WHERE QAAUTHOR_QAGROUP=" . $_GET['id'] . " AND QAAUTHOR_USER=$authorid") or die("Could not select." . mysql_error());;
+		$query = mysql_query("SELECT * FROM QAAUTHOR_LIST WHERE QAAUTHOR_QAGROUP=" . $_GET['id'] . " AND QAAUTHOR_USER='$authorid'") or die("Could not select." . mysql_error());;
 		if(mysql_fetch_array($query, MYSQL_ASSOC))
 		{
 			$errorm = 'That user is already an author.';
 		}
 		else
 		{
-			mysql_query("INSERT INTO QAAUTHOR_LIST (QAAUTHOR_QAGROUP,QAAUTHOR_USER) VALUES (" . $_GET['id'] . ",$authorid)") or die("Could not insert." . mysql_error());
+			mysql_query("INSERT INTO QAAUTHOR_LIST (QAAUTHOR_QAGROUP,QAAUTHOR_USER) VALUES (" . $_GET['id'] . ",'$authorid')") or die("Could not insert." . mysql_error());
 			$errorm = "User $authorid added as author.";
 		}
 	}
@@ -58,8 +58,9 @@ if(!$isauthor)
 			div.nselpage { padding: 2px; spacing: 3px; border: 1px solid #eeeeee; }
 		</style>
 	</head>
-	<body onLoad="sframe = document.getElementById('searchid'); sframe.style.display='none';">
+	<body>
 		<? include "inc-header.php"; ?>
+		<script type="text/javascript" src="/tophp.js"></script>
 		<? if($showitem) { ?>
 		<table cellpadding="5" cellspacing="0" border="0" style="text-align: left; width: 100%">
 		<tr>
@@ -101,7 +102,7 @@ if(!$isauthor)
 		WHERE QA_GROUP=' . $group['QAGROUP_ID'] . '
 		GROUP BY USER_ID
 		ORDER BY ' . $orderstr);
-		
+
 		if(mysql_num_rows($rsfills) > 0)
 		{
 			print '<h2 class="grayheading">' . mysql_num_rows($rsfills) . ' respondent';
@@ -198,21 +199,23 @@ if(!$isauthor)
 
 <h2 class="grayheading">Add Author</h2>
 <form style="padding: 2px" name="addauthor" action="group.php?id=<?=$group['QAGROUP_ID']?>" method="POST">
-<span style="font-weight: bold">ID</span> <input type="text" name="author" onClick="loadSearchID();" size="6"> <input type="hidden" value="newauthor"><input type="submit" name="newauthor" value="New">
+<span style="font-weight: bold">ID</span> <input type="text" id="author" name="author" onClick="loadSearchID();" size="6"> <input type="hidden" value="newauthor"><input type="submit" name="newauthor" value="New">
 </form>
-<iframe name="searchid" id="searchid" style="width: 600px; height: 400px; vertical-align: top; horizontal-align: left;">
-Your browser does not support iframes.
-</iframe>
+<div name="searchid" id="searchid" style="width: 600px; height: 400px; vertical-align: top; horizontal-align: left; display: none;">
+</div>
 <script type="text/javascript">
 <!--
 function loadSearchID()
 {
 	sframe = document.getElementById('searchid');
-	sframe.src='/directory/search-id.php?form=addauthor&formelement=author';
 	sframe.style.display='block';
+	
+	<? print $xml->make_request('"/directory/search-id.php"','POST','searchid','search_box',serialize(array('searchid','author'))); ?>
 }
 // -->
 </script>
+
+<script type="text/javascript" src="/directory/search-id.js.php"></script>
 
 		<? } ?>
 		</td>

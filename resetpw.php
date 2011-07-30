@@ -1,12 +1,31 @@
 <?
 include 'db.php';
 
-$showpage = false;
-
 // Only do a quick check to see if the username is syntactically valid
 if(ereg(USERNAME_REGEX, $_GET["un"]))
 {
 	$showpage = true;
+
+	$result = mysql_query("SELECT * FROM USER_LIST WHERE USER_UNAME='" . $_GET['un'] . "'") or die("Grab failed");
+
+	if($list = mysql_fetch_array($result, MYSQL_ASSOC))
+	{
+	        if(is_null($list['USER_ACTIVATION']))
+	        {
+	                $showpage = false;
+        	        $errorm = 'You don\'t seem to have an activation code. Go <a href="login.php">here</a> to receive another one.';
+	        }
+	        else if(!is_null($_GET['code']) && ($_GET['code'] != $list['USER_ACTIVATION']))
+	        {
+	                $showpage = false;
+	                $errorm = "Sorry, the activation code provided in your link is not valid. Contact staff.";
+        	}
+	}
+	else
+	{
+	        $showpage = false;
+        	$errorm = "Sorry, that user does not seem to exist. Contact staff.";
+	}
 
 	if($_POST['action'] == 'change')
 	{
@@ -26,24 +45,24 @@ if(ereg(USERNAME_REGEX, $_GET["un"]))
 					else
 					{
 	        				mysql_query("UPDATE USER_LIST SET USER_PW=MD5('" . $_POST['newpw'] . "'), USER_ACTIVATION=Null, USER_VALIDATED=1 WHERE USER_ID=" . $list['USER_ID']);
-        	
+
         	    				/*
 						if($line['USER_STATUS'] > 0 || !is_null($line['USER_TEACHERTAG']))
 			            			$timeout = 0;
       	  			    	else
 	      	      			$timeout = time() + 864000;
-            	
+
 	        			    	setcookie("UN", $line["USER_UNAME"], $timeout, "/");
 		        		    	setcookie("UNO", $line["USER_ID"], $timeout, "/");
             					setcookie("PW", md5($_POST["newpw"]), $timeout, "/");
 				            	*/
 
       	  	    			$errorm = '<p>Your password was successfully changed. <a href="/login.php">Log in</a></p>';
-					}
+      	  	    			}
 				}
 				else
         			{
-        				$errorm = '<p>Your passwords didn\'t match. Please <a href="javascript:go.back(1)">go back</a> and try again.</p>';
+        				$errorm = '<p>Your passwords didn\'t match. Please try again.';
 	        		}
 			}
 			else
@@ -70,12 +89,17 @@ else
 		<link rel="stylesheet" type="text/css" href="shs.css">
 	</head>
 	<body>
-	
+
 <? include "inc-header.php" ?>
 <h1 style="font-size: large">Reset Your Password</h1>
 <?= $errorm ?>
-<? if($showpage) { ?>
-<form action="resetpw.php?un=<?= urlencode($_GET['un']) ?>&code=<?=urlencode($_GET['code'])?>" method="POST">
+<? if($showpage) { 
+
+if($errorm != '<p>Your password was successfully changed. <a href="/login.php">Log in</a></p>')
+{
+?>
+
+<form action="resetpw.php?un=<?=urlencode($_GET['un'])?>&code=<?=urlencode($_GET['code'])?>" method="POST">
 <table>
 <tr><td><b>Username:</b></td><td><?= htmlentities($_GET['un']) ?></td></tr>
 <? if(!isset($_GET['code'])) { ?><tr><td><b>Activation code:</b></td><td><input type="text" name="code" value=""></td></tr><? } else print '<input type="hidden" name="code" value="' . $_GET['code'] .'">'; ?>
@@ -85,8 +109,7 @@ else
 <td><input type="hidden" name="action" value="change"><input type="submit" value="Change Password"></td></tr>
 </table>
 </form>
-<? } ?>
+<? } } ?>
 <? include 'inc-footer.php'; ?>
-
 </body>
 </html>
